@@ -1,14 +1,16 @@
 import { test, expect } from '@playwright/test';
 
 test('has title', async ({ page }) => {
-    await page.goto('https://playwright.dev/');
-    await expect(page).toHaveTitle(/Playwright/);
+    await page.goto('https://playwright.dev/', { waitUntil: 'domcontentloaded' });
+    const title = await page.title();
+    console.log(title);
+    await expect(page).toHaveTitle(/Fast and reliable end-to-end testing for modern web apps | Playwright/);;
 });
 
 // Skip test
 test.skip('skipped test', async ({ page }) => {
     // This test is skipped
-});
+}); 
 // Only run this test
 test.only('focused test', async ({ page }) => {
     // Only this test runs
@@ -20,7 +22,8 @@ test.fail('expected to fail', async ({ page }) => {
 });
 
 // Slow test (3x timeout)
-test.slow('slow test', async ({ page }) => {
+test('to slow test', async ({ page }) => {
+    test.slow();
     // Has extended timeout
 });
 
